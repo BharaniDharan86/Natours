@@ -1,0 +1,44 @@
+// app.get('/', (request, response) => {
+//   // response.status(200).send('Hello from the server side');
+//   response.status(200).json({
+//     message: 'Hello From Server',
+//     app: 'Natours',
+//   });
+// });
+
+// app.post('/', (request, response) => {
+//   response.status(201).send('Posted Successfully');
+// });
+
+/*const tours = fs.readFile(
+  `${__dirname}/dev-data/data/tours-simple.json`,
+  'utf-8',
+  (err, data) => {
+    console.log(data);
+  }
+);
+
+console.log(tours);*/
+
+// app.get('/api/v1/tours', getAlltours);
+// app.get('/api/v1/tours/:id', getTour);
+// app.post('/api/v1/tours', createTour);
+// app.patch('/api/v1/tours/:id', updateTour);
+// app.delete('/api/v1/tours/:id', deleteTour);
+
+// app.route('/api/v1/tours').get(getAlltours).post(createTour);
+
+// app
+//   .route('/api/v1/tours/:id')
+//   .get(getTour)
+//   .patch(updateTour)
+//   .delete(deleteTour);
+
+//USER API
+
+// app.route('/api/v1/users').get(getAllUsers).post(createUser);
+// app
+//   .route('/api/v1/users/:id')
+//   .get(getUser)
+//   .patch(updateUser)
+//   .delete(deleteUser);

@@ -4,6 +4,11 @@ const userRouter = express.Router();
 const userController = require('../controller/userController');
 const authController = require('../controller/authController');
 
+const {
+  uploadUserPhoto,
+  resizeUserPhoto,
+} = require('../controller/userController');
+
 userRouter.post('/signup', authController.createUser);
 
 userRouter.post('/login', authController.login);
@@ -20,7 +25,13 @@ userRouter.post(
   authController.updatePassword,
 );
 
-userRouter.patch('/updateme', authController.protect, userController.updateMe);
+userRouter.patch(
+  '/updateme',
+  authController.protect,
+  uploadUserPhoto,
+  resizeUserPhoto,
+  userController.updateMe,
+);
 
 userRouter
   .route('/')

@@ -2,11 +2,56 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable node/no-unsupported-features/es-syntax */
+const multer = require('multer');
 const APIFEATURE = require('../utils/apifeature');
 const Tour = require('../models/tourModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const handler = require('./handlerFactory');
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/img/tours');
+  },
+  filename: (req, file, cb) => {
+    const fileExt = file.mimetype.split('/')[1];
+    const ext = `tour-${req.params.id}-${Date.now()}-cover.jpg`;
+
+    cb(null, ext);
+  },
+});
+
+exports.renameImageCover = async (req, res, next) => {
+  req.body.imageCover = req.files.imageCover[0].filename;
+  req.body.images = req.files.images.map((el) => el.filename);
+  console.log(req.files);
+
+  next();
+};
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('should be a images'));
+  }
+};
+
+const uploads = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadTourImages = uploads.fields([
+  {
+    name: 'imageCover',
+    maxCount: 1,
+  },
+  {
+    name: 'images',
+    maxCount: 3,
+  },
+]);
 
 exports.getInfo = (req, res, next) => {
   req.query.limit = '5';

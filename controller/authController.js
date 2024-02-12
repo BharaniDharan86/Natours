@@ -119,15 +119,17 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
 
   const message = `Forgot your password ? submit a patch request with your new password and password confirm to ${resetURL}.Otherwise ignore this message..`;
 
+  console.log(message);
   try {
     await sendMail({
-      email: req.body.email,
+      email: 'bharanidharanm77@gmail.com',
       subject: 'Reset Token',
       message,
     });
   } catch (error) {
     currUser.passwordChangeTokenExpires = undefined;
     currUser.passwordChangeToken = undefined;
+    console.log(error);
 
     return next(new AppError('Failed', 404));
   }

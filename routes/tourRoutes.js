@@ -6,6 +6,7 @@ const reviewRouter = require('../routes/reviewRoutes');
 
 const tourController = require('../controller/tourController');
 const authController = require('../controller/authController');
+
 // const reviewController = require('../controller/reviewController');
 //PARAMS MIDDLEWARE
 
@@ -45,6 +46,8 @@ tourRouter
   .patch(
     authController.protect,
     tourController.restrictTo('admin', 'lead-guide', 'guide'),
+    tourController.uploadTourImages,
+    tourController.renameImageCover,
     tourController.updateTour,
   )
   .delete(

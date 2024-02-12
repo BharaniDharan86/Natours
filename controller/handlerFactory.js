@@ -15,6 +15,13 @@ exports.deleteOne = (Model) =>
 
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
+    // if (req.files) {
+    //   console.log('Vanakkam di Maapla');
+    //   console.log(req.files);
+    // }
+    console.log(req.body);
+
+    // console.log(req.params.id);
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,

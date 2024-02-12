@@ -1,0 +1,36 @@
+/* eslint-disable prettier/prettier */
+const mongoose = require('mongoose');
+
+const bookingSchema = new mongoose.Schema({
+  tour: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Tour',
+    required: true,
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  isPaid: {
+    type: Boolean,
+    default: true,
+  },
+});
+
+bookingSchema.pre(/^find/, function (next) {
+  this.populate('user').populate({ path: 'tour', select: 'name' });
+  next();
+});
+
+const Booking = mongoose.model('Booking', bookingSchema);
+
+module.exports = Booking;
